@@ -1,2 +1,6 @@
 : 1
 location: libsimpleble/
+:
+location: libsimplebluez/
+:
+location: libsimpledbus/

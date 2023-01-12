@@ -1,4 +1,7 @@
 import impl_libs = fmt%lib{fmt}
+import linux_intf_libs = libsimplebluez%lib{simplebluez}
+intf_libs =
+
 cxx.poptions += -Dsimpleble_EXPORTS
 
 # Public headers.
@@ -13,15 +16,14 @@ is_macos = ($cxx.target.class == 'macos')
 is_linux = ($cxx.target.class == 'linux')
 
 lib{simpleble}: $pub/{$pub_hdrs}
-lib{simpleble}: simpleble/{hxx cxx}{*}
-lib{simpleble}: simpleble/builders/{hxx cxx}{**}
-lib{simpleble}: simpleble/external/{hxx cxx}{**}
+lib{simpleble}: {hxx cxx}{*}
+lib{simpleble}: builders/{hxx cxx}{**}
+lib{simpleble}: external/{hxx cxx}{**}
 
-lib{simpleble}: simpleble/linux/{hxx cxx}{**}: include = $is_linux
-lib{simpleble}: simplebluez/{hxx cxx}{**}: include = $is_linux
-lib{simpleble}: simpledbus/{hxx cxx}{**}: include = $is_linux
+lib{simpleble}: linux/{hxx cxx}{**}: include = $is_linux
+lib{simpleble}: $linux_intf_libs: include = $is_linux
 
-lib{simpleble}: simpleble/windows/{hxx cxx}{**}: include = $is_windows
+lib{simpleble}: windows/{hxx cxx}{**}: include = $is_windows
 
 lib{simpleble}: $impl_libs
 
@@ -36,16 +38,12 @@ switch $cxx.target.class
             platform_poptions += "/D_USE_MATH_DEFINES" "/D_WIN32_WINNT=0x0A00" "/Gd"
 		}
     }
-    case 'linux'
-    {
-		# TODO can we get these paths from pkgconfig?
-        platform_poptions += "-I/usr/include/dbus-1.0" "-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include"
-		platform_poptions += "-DSIMPLEDBUS_LOG_LEVEL=$config.libsimpleble.dbus_log_level" "-DSIMPLEBLUEZ_LOG_LEVEL=$config.libsimpleble.bluez_log_level"
-        platform_libs = -pthread -ldbus-1
-    }
+	case 'linux'
+	{
+		intf_libs += $linux_intf_libs
+	}
 }
 
-src_dirs = {**/}
 
 # Build options.
 out_pfx_inc = [dir_path] $out_root/include/
@@ -53,6 +51,7 @@ src_pfx_inc = [dir_path] $src_root/include/
 out_pfx_src = [dir_path] $out_root/src/
 src_pfx_src = [dir_path] $src_root/src/
 
+src_dirs = {**/}
 for d: $src_dirs
 {
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
@@ -69,9 +68,10 @@ cxx.libs += $platform_libs
 lib{simpleble}:
 {
   cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc"
+  cxx.export.libs = $intf_libs
 }
 
-liba{sfml-system}: cxx.export.poptions += -DSIMPLEBLE_STATIC_DEFINE
+liba{simpleble}: cxx.export.poptions += -DSIMPLEBLE_STATIC_DEFINE
 
 # For pre-releases use the complete version to make sure they cannot be used
 # in place of another pre-release or the final version. See the version module

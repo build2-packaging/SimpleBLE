@@ -1,3 +1,4 @@
+import intf_libs = libsimpledbus%lib{simpledbus}
 import impl_libs = fmt%lib{fmt}
 
 # Public headers.
@@ -9,7 +10,7 @@ pub_hdrs = $($pub/ pub_hdrs)
 
 lib{simplebluez}: $pub/{$pub_hdrs}
 lib{simplebluez}: {hxx cxx}{**}
-lib{simplebluez}: $impl_libs
+lib{simplebluez}: $intf_libs $impl_libs
 
 # Build options.
 out_pfx_inc = [dir_path] $out_root/include/
@@ -23,14 +24,16 @@ for d: $src_inc_dirs
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
+platform_poptions = "-DSIMPLEBLUEZ_LOG_LEVEL=$config.libsimplebluez.log_level"
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-                "-DSIMPLEBLUEZ_LOG_LEVEL=$config.libsimplebluez.log_level"
+                $platform_poptions
 
 # Export options.
 lib{simplebluez}:
 {
-  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc"
+  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc" $platform_poptions
+  cxx.export.libs = $intf_libs
 }
 
 # For pre-releases use the complete version to make sure they cannot be used

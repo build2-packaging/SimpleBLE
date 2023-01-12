@@ -1,0 +1,1 @@
+../../upstream/simpleble/src/AdapterSafe.cpp
