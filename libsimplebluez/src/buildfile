@@ -1,0 +1,45 @@
+import impl_libs = fmt%lib{fmt}
+
+# Public headers.
+pub = [dir_path] ../include/
+
+include $pub
+
+pub_hdrs = $($pub/ pub_hdrs)
+
+lib{simplebluez}: $pub/{$pub_hdrs}
+lib{simplebluez}: {hxx cxx}{**}
+lib{simplebluez}: $impl_libs
+
+# Build options.
+out_pfx_inc = [dir_path] $out_root/include/
+src_pfx_inc = [dir_path] $src_root/include/
+out_pfx_src = [dir_path] $out_root/src/
+src_pfx_src = [dir_path] $src_root/src/
+
+src_inc_dirs = {**/}
+for d: $src_inc_dirs
+{
+    cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
+}
+
+cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
+                "-I$out_pfx_inc" "-I$src_pfx_inc" \
+                "-DSIMPLEBLUEZ_LOG_LEVEL=$config.libsimplebluez.log_level"
+
+# Export options.
+lib{simplebluez}:
+{
+  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc"
+}
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+if $version.pre_release
+  lib{simplebluez}: bin.lib.version = "-$version.project_id"
+else
+  lib{simplebluez}: bin.lib.version = "-$version.major.$version.minor"
+
+# Don't install private headers.
+{hxx ixx}{*}: install = false

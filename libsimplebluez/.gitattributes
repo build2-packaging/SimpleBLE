@@ -1,0 +1,5 @@
+include/simplebluez symlink=dir
+include/simpledbus symlink=dir
+src/simpleble/ symlink=dir
+src/simplebluez/ symlink=dir
+src/simpledbus/ symlink=dir
