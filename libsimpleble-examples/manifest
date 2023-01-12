@@ -1,8 +1,8 @@
 : 1
-name: libsimpleble
+name: libsimpleble-examples
 version: 0.5.0
 project: SimpleBLE
-summary: The ultimate fully-fledged cross-platform library for Bluetooth Low Energy (BLE).
+summary: Exakples for the SimpleBLE library.
 license: MIT
 description-file: README.md
 topics: C++, BLE
@@ -15,5 +15,4 @@ builds: default
 
 depends: * build2 >= 0.15.0
 depends: * bpkg >= 0.15.0
-depends: fmt ^9.1.0
-depends: libsimplebluez == $
+depends: libsimpleble == $

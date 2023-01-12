@@ -1,2 +1,2 @@
-import pkgs = libsimpleble/ libsimplebluez/ libsimpledbus/
+import pkgs = libsimpleble/ libsimpleble-examples/ libsimplebluez/ libsimpledbus/
 ./: $pkgs

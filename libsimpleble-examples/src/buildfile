@@ -1,0 +1,21 @@
+impl_libs =
+import intf_libs = libsimpleble%lib{simpleble}
+
+lib{common}: common/{hxx cxx}{*}
+lib{common}: $intf_libs
+
+example_dirs = \
+	connect \
+	list_adapaters \
+	notify \
+	notify_multi  \
+	read \
+	scan \
+	write
+
+for example: $example_dirs
+{
+	exe{$example}: $example/{hxx cxx}{*}
+	exe{$example}: $intf_libs
+	exe{$example}: lib{common}
+}
