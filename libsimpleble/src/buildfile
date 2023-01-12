@@ -2,8 +2,6 @@ import impl_libs = fmt%lib{fmt}
 import linux_intf_libs = libsimplebluez%lib{simplebluez}
 intf_libs =
 
-cxx.poptions += -Dsimpleble_EXPORTS
-
 # Public headers.
 pub = [dir_path] ../include/
 
@@ -29,10 +27,12 @@ lib{simpleble}: $impl_libs
 
 platform_libs = # Platform specific libraries.
 platform_poptions = # Platform specific poptions.
+src_inc_dirs = builders/ external/
 switch $cxx.target.class
 {
     case 'windows'
     {
+		src_inc_dirs += windows/
         if ($cxx.target.system != 'mingw32')
 		{
             platform_poptions += "/D_USE_MATH_DEFINES" "/D_WIN32_WINNT=0x0A00" "/Gd"
@@ -40,10 +40,18 @@ switch $cxx.target.class
     }
 	case 'linux'
 	{
+		src_inc_dirs += linux/
 		intf_libs += $linux_intf_libs
 	}
+	case 'macos'
+	{
+		src_inc_dirs += macos/
+	}
+	default
+	{
+		fail "Unsupported platform '$cxx.target.class"
+	}
 }
-
 
 # Build options.
 out_pfx_inc = [dir_path] $out_root/include/
@@ -51,14 +59,15 @@ src_pfx_inc = [dir_path] $src_root/include/
 out_pfx_src = [dir_path] $out_root/src/
 src_pfx_src = [dir_path] $src_root/src/
 
-src_dirs = {**/}
-for d: $src_dirs
+
+for d: $src_inc_dirs
 {
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
+				"-Dsimpleble_EXPORTS" \
                 $platform_poptions
 cxx.libs += $platform_libs
 
