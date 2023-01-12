@@ -1,0 +1,18 @@
+: 1
+name: libsimpleble
+version: 0.5.0
+project: SimpleBLE
+summary: The SimpleBLE core module.
+license: MIT
+description-file: README.md
+topics: C++, BLE
+url: https://simpleble.com/
+src-url: https://github.com/OpenBluetoothToolbox/SimpleBLE
+doc-url: https://simpleble.com/
+package-url: https://github.com/build2-packaging/SimpleBLE
+package-email: packaging@build2.org ; Mailing list.
+builds: default
+
+depends: * build2 >= 0.15.0
+depends: * bpkg >= 0.15.0
+depends: fmt ^9.1.0

@@ -1,0 +1,2 @@
+import pkgs = libsimpleble/
+./: $pkgs
