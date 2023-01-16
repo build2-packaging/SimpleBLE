@@ -1,6 +1,6 @@
 : 1
 name: libsimpleble-examples
-version: 0.5.0
+version: 0.5.0-a.0.z
 project: SimpleBLE
 summary: Exakples for the SimpleBLE library.
 license: MIT
