@@ -23,6 +23,38 @@ lib{simpleble}: $linux_intf_libs: include = $is_linux
 
 lib{simpleble}: windows/{hxx cxx}{*}: include = $is_windows
 
+lib{simpleble}: macos/{hxx cxx}{*}: include = $is_macos
+
+define mm: file
+mm{*}: extension = mm
+
+objcxx_files = macos/*.mm
+objcxx_files = $regex.apply($objcxx_files,'(.+)\.mm','\1')
+
+for n: $objcxx_files
+{
+    obja{$(n).a.o}: mm{$n}
+    objs{$(n).so.o}: mm{$n}
+}
+
+liba{simpleble}: obja{$regex.apply($objcxx_files,'(.+)','\1.a.o')}: include = $is_macos
+libs{simpleble}: objs{$regex.apply($objcxx_files,'(.+)','\1.so.o')}: include = $is_macos
+
+obja{~'/(.*).a/'}: mm{~'/\1/'}
+{{
+    diag obj-c ($<[0])
+    $cxx.path $cc.poptions $cxx.poptions                  \
+              $cc.coptions $cxx.coptions $cxx.mode        \
+              -o $path($>) -c -x objective-c $path($<[0])
+}}
+objs{~'/(.*).so/'}: mm{~'/\1/'}
+{{
+    diag obj-c ($<[0])
+    $cxx.path $cc.poptions $cxx.poptions                  \
+              $cc.coptions $cxx.coptions $cxx.mode        \
+              -o $path($>) -c -x objective-c $path($<[0])
+}}
+
 lib{simpleble}: $impl_libs
 
 platform_libs = # Platform specific libraries.
@@ -48,6 +80,8 @@ switch $cxx.target.class
     case 'macos'
     {
         src_inc_dirs += macos/
+		platform_coptions += -fobjc-arc
+		platform_libs += -framework Foundation -framework CoreBluetooth
     }
     default
     {

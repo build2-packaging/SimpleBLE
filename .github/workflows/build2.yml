@@ -45,30 +45,30 @@ jobs:
         run: b -V
 
   # Job for building on MacOS
-  # MacOS:
-  #   name: ${{matrix.config.name}}
-  #   runs-on: ${{matrix.config.os}}
-  #   strategy:
-  #     matrix:
-  #       config:
-  #         - name: MacOS clang Debug
-  #           os: macos-latest
-  #           config_file: clang.debug.build
-  #         - name: MacOS clang Release
-  #           os: macos-latest
-  #           config_file: clang.release.build
+  MacOS:
+    name: ${{matrix.config.name}}
+    runs-on: ${{matrix.config.os}}
+    strategy:
+      matrix:
+        config:
+          - name: MacOS clang Debug
+            os: macos-latest
+            config_file: clang.debug.build
+          - name: MacOS clang Release
+            os: macos-latest
+            config_file: clang.release.build
 
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #     with:
-  #       submodules: true
-  #   - uses: build2/setup-build2-github-action@v2
-  #     with:
-  #       build2-version: latest
-  #   - name: Configure
-  #     run: bdep init -C @cc cc config.config.load=build-config/${{matrix.config.config_file}}
-  #   - name: Build
-  #     run: b -V
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    - uses: build2/setup-build2-github-action@v2
+      with:
+        build2-version: latest
+    - name: Configure
+      run: bdep init -C @cc cc config.config.load=build-config/${{matrix.config.config_file}}
+    - name: Build
+      run: b -V
 
   # Job for building on Windows
   Windows:
