@@ -1,4 +1,4 @@
 include/simpledbus symlink=dir
-src/simpledbus/advanced symlink=dir
-src/simpledbus/base symlink=dir
-src/simpledbus/interfaces symlink=dir
+src/advanced symlink=dir
+src/base symlink=dir
+src/interfaces symlink=dir

@@ -1,2 +1,2 @@
 include/simplebluez symlink=dir
-src/interfaces/ symlink=dir
+src/interfaces symlink=dir

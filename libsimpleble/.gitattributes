@@ -1,5 +1,5 @@
-src/builders/ symlink=dir
-src/external/ symlink=dir
-src/linux/ symlink=dir
-src/macos/ symlink=dir
-src/windows/ symlink=dir
+src/builders symlink=dir
+src/external symlink=dir
+src/linux symlink=dir
+src/macos symlink=dir
+src/windows symlink=dir
