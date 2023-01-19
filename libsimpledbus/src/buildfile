@@ -28,7 +28,7 @@ platform_libs = -pthread -ldbus-1
 
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-				$platform_poptions
+                $platform_poptions
 cxx.libs += $platform_libs
 
 # Export options.

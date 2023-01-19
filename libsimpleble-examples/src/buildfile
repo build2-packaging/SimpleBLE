@@ -5,18 +5,18 @@ lib{common}: common/{hxx cxx}{*}
 lib{common}: $intf_libs
 
 example_dirs = \
-	connect \
-	list_adapters \
-	notify \
-	notify_multi  \
-	read \
-	scan \
-	write
+    connect \
+    list_adapters \
+    notify \
+    notify_multi \
+    read \
+    scan \
+    write
 
 for example: $example_dirs
 {
-	exe{$(example)_example}: $example/{hxx cxx}{*}
-	exe{$(example)_example}: $intf_libs
-	exe{$(example)_example}: lib{common}
+    exe{$(example)_example}: $example/{hxx cxx}{*}
+    exe{$(example)_example}: $intf_libs
+    exe{$(example)_example}: lib{common}
     ./: exe{$(example)_example}
 }

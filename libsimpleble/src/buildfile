@@ -15,42 +15,44 @@ is_linux = ($cxx.target.class == 'linux')
 
 lib{simpleble}: $pub/{$pub_hdrs}
 lib{simpleble}: {hxx cxx}{*}
-lib{simpleble}: builders/{hxx cxx}{**}
-lib{simpleble}: external/{hxx cxx}{**}
+lib{simpleble}: builders/{hxx cxx}{*}
+lib{simpleble}: external/{hxx cxx}{*}
 
-lib{simpleble}: linux/{hxx cxx}{**}: include = $is_linux
+lib{simpleble}: linux/{hxx cxx}{*}: include = $is_linux
 lib{simpleble}: $linux_intf_libs: include = $is_linux
 
-lib{simpleble}: windows/{hxx cxx}{**}: include = $is_windows
+lib{simpleble}: windows/{hxx cxx}{*}: include = $is_windows
 
 lib{simpleble}: $impl_libs
 
 platform_libs = # Platform specific libraries.
 platform_poptions = # Platform specific poptions.
+platform_coptions = # Platform specific coptions.
 src_inc_dirs = builders/ external/
 switch $cxx.target.class
 {
     case 'windows'
     {
-		src_inc_dirs += windows/
+        src_inc_dirs += windows/
         if ($cxx.target.system != 'mingw32')
-		{
-            platform_poptions += "/D_USE_MATH_DEFINES" "/D_WIN32_WINNT=0x0A00" "/Gd"
-		}
+        {
+            platform_coptions += /Gd /WX /W1
+            platform_poptions += /D_WIN32_WINNT=0x0A00 /D_USE_MATH_DEFINES
+        }
     }
-	case 'linux'
-	{
-		src_inc_dirs += linux/
-		intf_libs += $linux_intf_libs
-	}
-	case 'macos'
-	{
-		src_inc_dirs += macos/
-	}
-	default
-	{
-		fail "Unsupported platform '$cxx.target.class"
-	}
+    case 'linux'
+    {
+        src_inc_dirs += linux/
+        intf_libs += $linux_intf_libs
+    }
+    case 'macos'
+    {
+        src_inc_dirs += macos/
+    }
+    default
+    {
+        fail "Unsupported platform '$cxx.target.class"
+    }
 }
 
 # Build options.
@@ -59,15 +61,15 @@ src_pfx_inc = [dir_path] $src_root/include/
 out_pfx_src = [dir_path] $out_root/src/
 src_pfx_src = [dir_path] $src_root/src/
 
-
 for d: $src_inc_dirs
 {
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
+cxx.coptions += $platform_coptions
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-				"-Dsimpleble_EXPORTS" \
+                "-Dsimpleble_EXPORTS" \
                 $platform_poptions
 cxx.libs += $platform_libs
 
