@@ -43,15 +43,15 @@ libs{simpleble}: objs{$regex.apply($objcxx_files,'(.+)','\1.so.o')}: include = $
 obja{~'/(.*).a/'}: mm{~'/\1/'}
 {{
     diag obj-c ($<[0])
-    $cxx.path $cc.poptions $cxx.poptions                  \
-              $cc.coptions $cxx.coptions $cxx.mode        \
+    $c.path $cc.poptions $c.poptions                  \
+              $cc.coptions $c.coptions $c.mode        \
               -o $path($>) -c -x objective-c $path($<[0])
 }}
 objs{~'/(.*).so/'}: mm{~'/\1/'}
 {{
     diag obj-c ($<[0])
-    $cxx.path $cc.poptions $cxx.poptions                  \
-              $cc.coptions $cxx.coptions $cxx.mode        \
+    $c.path $cc.poptions $c.poptions                  \
+              $cc.coptions $c.coptions $c.mode        \
               -o $path($>) -c -x objective-c $path($<[0])
 }}
 
@@ -97,15 +97,15 @@ src_pfx_src = [dir_path] $src_root/src/
 
 for d: $src_inc_dirs
 {
-    cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
+    cc.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
-cxx.coptions += $platform_coptions
-cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
+cc.coptions += $platform_coptions
+cc.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
                 "-Dsimpleble_EXPORTS" \
                 $platform_poptions
-cxx.libs += $platform_libs
+cc.libs += $platform_libs
 
 {hbmia obja}{*}: cxx.poptions += -DSIMPLEBLE_STATIC_DEFINE
 

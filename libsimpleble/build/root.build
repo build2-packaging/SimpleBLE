@@ -1,6 +1,7 @@
 cxx.std = 17
 
 using cxx
+using c
 
 hxx{*}: extension = h
 cxx{*}: extension = cpp
