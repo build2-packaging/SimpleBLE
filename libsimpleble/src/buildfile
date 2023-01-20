@@ -42,17 +42,17 @@ libs{simpleble}: objs{$regex.apply($objcxx_files,'(.+)','\1.so.o')}: include = $
 
 obja{~'/(.*).a/'}: mm{~'/\1/'}
 {{
-    diag obj-c ($<[0])
-    $c.path $cc.poptions $c.poptions                  \
-              $cc.coptions $c.coptions $c.mode        \
-              -o $path($>) -c -x objective-c $path($<[0])
+    diag obj-c++ ($<[0])
+    $cxx.path $cc.poptions $cxx.poptions                  \
+              $cc.coptions $cxx.coptions $cxx.mode        \
+              -o $path($>) -c -x objective-c++ $path($<[0])
 }}
 objs{~'/(.*).so/'}: mm{~'/\1/'}
 {{
-    diag obj-c ($<[0])
-    $c.path $cc.poptions $c.poptions                  \
-              $cc.coptions $c.coptions $c.mode        \
-              -o $path($>) -c -x objective-c $path($<[0])
+    diag obj-c++ ($<[0])
+    $cxx.path $cc.poptions $cxx.poptions                  \
+              $cc.coptions $cxx.coptions $cxx.mode        \
+              -o $path($>) -c -x objective-c++ $path($<[0])
 }}
 
 lib{simpleble}: $impl_libs
@@ -68,8 +68,12 @@ switch $cxx.target.class
         src_inc_dirs += windows/
         if ($cxx.target.system != 'mingw32')
         {
+            platform_poptions += -D_WIN32_WINNT=0x0A00 -D_USE_MATH_DEFINES
+        }
+
+        if($cxx.target.system == 'win32-msvc')
+        {
             platform_coptions += /Gd /WX /W1
-            platform_poptions += /D_WIN32_WINNT=0x0A00 /D_USE_MATH_DEFINES
         }
     }
     case 'linux'
@@ -80,8 +84,8 @@ switch $cxx.target.class
     case 'macos'
     {
         src_inc_dirs += macos/
-		platform_coptions += -fobjc-arc
-		platform_libs += -framework Foundation -framework CoreBluetooth
+        platform_coptions += -fobjc-arc
+        platform_libs += -framework Foundation -framework CoreBluetooth
     }
     default
     {
@@ -97,15 +101,15 @@ src_pfx_src = [dir_path] $src_root/src/
 
 for d: $src_inc_dirs
 {
-    cc.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
+    cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
-cc.coptions += $platform_coptions
-cc.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
+cxx.coptions += $platform_coptions
+cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
                 "-Dsimpleble_EXPORTS" \
                 $platform_poptions
-cc.libs += $platform_libs
+cxx.libs += $platform_libs
 
 {hbmia obja}{*}: cxx.poptions += -DSIMPLEBLE_STATIC_DEFINE
 
