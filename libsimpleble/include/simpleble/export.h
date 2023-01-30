@@ -2,41 +2,30 @@
 #ifndef SIMPLEBLE_EXPORT_H
 #define SIMPLEBLE_EXPORT_H
 
-#ifdef SIMPLEBLE_STATIC_DEFINE
-#  define SIMPLEBLE_EXPORT
-#  define SIMPLEBLE_NO_EXPORT
+#if !defined(SIMPLEBLE_STATIC) && defined(_WIN32)
+#ifdef SIMPLEBLE_EXPORTS
+#define SIMPLEBLE_EXPORT __declspec(dllexport)
 #else
-#  ifndef SIMPLEBLE_EXPORT
-#    ifdef simpleble_EXPORTS
-        /* We are building this library */
-#      define SIMPLEBLE_EXPORT 
-#    else
-        /* We are using this library */
-#      define SIMPLEBLE_EXPORT 
-#    endif
-#  endif
+#define SIMPLEBLE_EXPORT __declspec(dllimport)
+#endif
+#else
+#define SIMPLEBLE_EXPORT
+#endif
 
-#  ifndef SIMPLEBLE_NO_EXPORT
-#    define SIMPLEBLE_NO_EXPORT 
-#  endif
+#ifndef SIMPLEBLE_NO_EXPORT
+#define SIMPLEBLE_NO_EXPORT
 #endif
 
 #ifndef SIMPLEBLE_DEPRECATED
-#  define SIMPLEBLE_DEPRECATED __attribute__ ((__deprecated__))
+#define SIMPLEBLE_DEPRECATED __attribute__ ((__deprecated__))
 #endif
 
 #ifndef SIMPLEBLE_DEPRECATED_EXPORT
-#  define SIMPLEBLE_DEPRECATED_EXPORT SIMPLEBLE_EXPORT SIMPLEBLE_DEPRECATED
+#define SIMPLEBLE_DEPRECATED_EXPORT SIMPLEBLE_EXPORT SIMPLEBLE_DEPRECATED
 #endif
 
 #ifndef SIMPLEBLE_DEPRECATED_NO_EXPORT
-#  define SIMPLEBLE_DEPRECATED_NO_EXPORT SIMPLEBLE_NO_EXPORT SIMPLEBLE_DEPRECATED
-#endif
-
-#if 0 /* DEFINE_NO_DEPRECATED */
-#  ifndef SIMPLEBLE_NO_DEPRECATED
-#    define SIMPLEBLE_NO_DEPRECATED
-#  endif
+#define SIMPLEBLE_DEPRECATED_NO_EXPORT SIMPLEBLE_NO_EXPORT SIMPLEBLE_DEPRECATED
 #endif
 
 #endif /* SIMPLEBLE_EXPORT_H */

@@ -124,11 +124,11 @@ for d: $src_inc_dirs
 cxx.coptions += $platform_coptions
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-                "-Dsimpleble_EXPORTS" \
+                "-DSIMPLEBLE_EXPORTS" \
                 $platform_poptions
 cxx.libs += $platform_libs
 
-{hbmia obja}{*}: cxx.poptions += -DSIMPLEBLE_STATIC_DEFINE
+{hbmia obja}{*}: cxx.poptions += -DSIMPLEBLE_STATIC
 
 # Export options.
 lib{simpleble}:
@@ -137,7 +137,7 @@ lib{simpleble}:
   cxx.export.libs = $intf_libs
 }
 
-liba{simpleble}: cxx.export.poptions += -DSIMPLEBLE_STATIC_DEFINE
+liba{simpleble}: cxx.export.poptions += -DSIMPLEBLE_STATIC
 
 # For pre-releases use the complete version to make sure they cannot be used
 # in place of another pre-release or the final version. See the version module
