@@ -2,7 +2,7 @@ pub_hdrs = hxx{**}
 
 ./: $pub_hdrs
 
-{ixx hxx}{*}:
+hxx{*}:
 {
   install.subdirs = true
 }

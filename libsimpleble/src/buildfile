@@ -148,4 +148,4 @@ else
   lib{simpleble}: bin.lib.version = "-$version.major.$version.minor"
 
 # Don't install private headers.
-{hxx ixx}{*}: install = false
+hxx{*}: install = false
