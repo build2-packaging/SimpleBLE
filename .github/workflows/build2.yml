@@ -102,7 +102,7 @@ jobs:
         build2-version: latest
         build2-windows-compiler: ${{matrix.config.compiler_type}}
     - name: Install Dependencies
-      run: winget install "Visual Studio Community 2022"  --override "--add Microsoft.VisualStudio.Workload.NativeDesktop  Microsoft.VisualStudio.ComponentGroup.WindowsAppSDK.Cpp"  -s msstore
+      run: choco install windows-sdk-10.0
     - name: Configure
       run: bdep init -C ../SimpleBLE-cc @cc cc config.config.load=build-config/${{matrix.config.config_file}}
     - name: Build
