@@ -1,9 +1,6 @@
 impl_libs =
 import intf_libs = libsimpleble%lib{simpleble}
 
-lib{common}: common/{hxx cxx}{*}
-lib{common}: $intf_libs
-
 example_dirs = \
     connect \
     list_adapters \
@@ -15,8 +12,7 @@ example_dirs = \
 
 for example: $example_dirs
 {
-    exe{$(example)_example}: $example/{hxx cxx}{*}
+    exe{$(example)_example}: {hxx cxx}{$example/* common/*}
     exe{$(example)_example}: $intf_libs
-    exe{$(example)_example}: lib{common}
     ./: exe{$(example)_example}
 }
