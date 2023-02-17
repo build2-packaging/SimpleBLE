@@ -81,21 +81,13 @@ jobs:
             os: windows-latest
             config_file: msvc.debug.build
             compiler_type: msvc
-          - name: Windows clang Debug
-            os: windows-latest
-            config_file: clang.debug.build
-            compiler_type: clang
           - name: Windows msvc Release
             os: windows-latest
             config_file: msvc.release.build
             compiler_type: msvc
-          - name: Windows clang Release
-            os: windows-latest
-            config_file: clang.release.build
-            compiler_type: clang
     steps:
     - name: Install Dependencies
-      run: choco install visualstudio2022-workload-nativedesktop
+      run: choco install visualstudio2022-workload-nativedesktop visualstudio2022-workload-manageddesktop
     - uses: actions/checkout@v3
       with:
         submodules: true
