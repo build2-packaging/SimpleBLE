@@ -87,7 +87,7 @@ jobs:
             compiler_type: msvc
     steps:
     - name: Install Dependencies
-      run: choco install visualstudio2022-workload-nativedesktop visualstudio2022-workload-manageddesktop
+      run: choco install visualstudio2022-workload-nativedesktop visualstudio2022-workload-manageddesktop visualstudio2022-workload-universal
     - uses: actions/checkout@v3
       with:
         submodules: true
