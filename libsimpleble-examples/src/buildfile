@@ -1,4 +1,3 @@
-impl_libs =
 import intf_libs = libsimpleble%lib{simpleble}
 
 example_dirs = \
