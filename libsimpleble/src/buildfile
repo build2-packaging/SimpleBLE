@@ -24,55 +24,7 @@ lib{simpleble}: $linux_intf_libs: include = $is_linux
 
 lib{simpleble}: windows/{hxx cxx}{*}: include = $is_windows
 
-lib{simpleble}: macos/{hxx cxx}{*}: include = $is_macos
-
-define mm: file
-mm{*}: extension = mm
-
-objcxx_files = macos/*.mm
-objcxx_files = $regex.apply($objcxx_files,'(.+)\.mm','\1')
-
-[rule_hint=cxx] libul{simpleble-meta}: $intf_libs $impl_libs
-
-for n: $objcxx_files
-{
-    obja{$(n).a.o}: mm{$n}
-    objs{$(n).so.o}: mm{$n}
-}
-
-liba{simpleble}: obja{$regex.apply($objcxx_files,'(.+)','\1.a.o')}: include = $is_macos
-libs{simpleble}: objs{$regex.apply($objcxx_files,'(.+)','\1.so.o')}: include = $is_macos
-
-obja{~'/(.*).a/'}: mm{~'/\1/'} libua{simpleble-meta}
-{{
-    dep_poptions = $cxx.lib_poptions(libua{simpleble-meta}, obja)
-    depdb hash $dep_poptions
-    depdb dyndep "-I$out_root/src" "-I$src_root/src" \
-                 "-I$out_root/include" "-I$src_root/include" \
-                 --what=header --default-type=h \
-                 --update-exclude libua{simpleble-meta} \
-                 -- $cxx.path $cc.poptions $cxx.poptions $dep_poptions \
-                    $cc.coptions $cxx.coptions $cxx.mode -M -MG $path($<[0])
-    diag obj-c++ ($<[0])
-    $cxx.path $cc.poptions $cxx.poptions $dep_poptions    \
-              $cc.coptions $cxx.coptions $cxx.mode        \
-              -o $path($>) -c -x objective-c++ $path($<[0])
-}}
-objs{~'/(.*).so/'}: mm{~'/\1/'} libus{simpleble-meta}
-{{
-    dep_poptions = $cxx.lib_poptions(libus{simpleble-meta}, objs)
-    depdb hash $dep_poptions
-    depdb dyndep "-I$out_root/src" "-I$src_root/src" \
-                 "-I$out_root/include" "-I$src_root/include" \
-                 --what=header --default-type=h \
-                 --update-exclude libus{simpleble-meta} \
-                 -- $cxx.path $cc.poptions $cxx.poptions $dep_poptions \
-                    $cc.coptions $cxx.coptions $cxx.mode -M -MG $path($<[0])
-    diag obj-c++ ($<[0])
-    $cxx.path $cc.poptions $cxx.poptions $dep_poptions    \
-              $cc.coptions $cxx.coptions $cxx.mode        \
-              -o $path($>) -c -x objective-c++ $path($<[0])
-}}
+lib{simpleble}: macos/{hxx cxx mm}{*}: include = $is_macos
 
 platform_libs = # Platform specific libraries.
 platform_poptions = # Platform specific poptions.

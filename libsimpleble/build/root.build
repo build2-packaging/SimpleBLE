@@ -1,9 +1,11 @@
 cxx.std = latest
 
 using cxx
+using cxx.objcxx
 
 hxx{*}: extension = h
 cxx{*}: extension = cpp
+mm{*}: extension = mm
 
 # Assume headers are importable unless stated otherwise.
 hxx{*}: cxx.importable = true
