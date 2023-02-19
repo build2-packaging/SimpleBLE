@@ -86,11 +86,12 @@ jobs:
             config_file: msvc.release.build
             compiler_type: msvc
     steps:
-    - name: Install Dependencies
-      run: choco install visualstudio2022-workload-nativedesktop visualstudio2022-workload-manageddesktop visualstudio2022-workload-universal windows-sdk-10.0
     - uses: actions/checkout@v3
       with:
         submodules: true
+    - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.11
+      with:
+        sdk-version: 22621
     - uses: build2/setup-build2-github-action@v2
       with:
         build2-version: staged
