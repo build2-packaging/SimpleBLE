@@ -13,6 +13,6 @@ package-url: https://github.com/build2-packaging/SimpleBLE
 package-email: packaging@build2.org ; Mailing list.
 builds: &( +linux )
 
-depends: * build2 >= 0.15.0
-depends: * bpkg >= 0.15.0
+depends: * build2 >= 0.16.0-
+depends: * bpkg >= 0.16.0-
 depends: fmt ^9.1.0

@@ -14,7 +14,7 @@ package-email: packaging@build2.org ; Mailing list.
 builds: &( +linux +macos +windows )
 examples: libsimpleble-examples
 
-depends: * build2 >= 0.15.0
-depends: * bpkg >= 0.15.0
+depends: * build2 >= 0.16.0-
+depends: * bpkg >= 0.16.0-
 depends: fmt ^9.1.0
 depends: libsimplebluez == $
