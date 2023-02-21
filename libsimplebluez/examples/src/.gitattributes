@@ -1,0 +1,8 @@
+ble_nus symlink=dir
+connect symlink=dir
+list_adapters symlink=dir
+list_paired symlink=dir
+notify symlink=dir
+pair symlink=dir
+read symlink=dir
+scan symlink=dir

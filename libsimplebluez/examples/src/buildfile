@@ -1,0 +1,18 @@
+import intf_libs = libsimplebluez%lib{simplebluez}
+
+example_dirs = \
+    ble_nus \
+    connect \
+    list_adapters \
+    list_paired \
+    notify \
+    pair \
+    read \
+    scan
+
+for example: $example_dirs
+{
+    exe{$(example)_example}: cxx{$example/*}
+    exe{$(example)_example}: $intf_libs
+    ./: exe{$(example)_example}
+}
