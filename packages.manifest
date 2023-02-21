@@ -1,8 +1,6 @@
 : 1
 location: libsimpleble/
 :
-location: libsimpleble-examples/
-:
 location: libsimplebluez/
 :
 location: libsimpledbus/

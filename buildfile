@@ -1,10 +1,8 @@
 import pkgs = libsimpleble/
 
-libimgui = [dir_path] $pkgs
+simpleble_dir = [dir_path] $pkgs
 
-import pkgs += libsimpleble-examples/
-
-switch $($libimgui/ cxx.target.class)
+switch $($simpleble_dir/ cxx.target.class)
 {
     case 'linux'
     {

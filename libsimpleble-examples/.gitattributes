@@ -1,9 +1,0 @@
-src/common symlink=dir
-src/connect symlink=dir
-src/connect_safe symlink=dir
-src/list_adapters symlink=dir
-src/notify symlink=dir
-src/notify_multi symlink=dir
-src/read symlink=dir
-src/scan symlink=dir
-src/write symlink=dir

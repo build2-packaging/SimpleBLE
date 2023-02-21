@@ -1,0 +1,9 @@
+common symlink=dir
+connect symlink=dir
+connect_safe symlink=dir
+list_adapters symlink=dir
+notify symlink=dir
+notify_multi symlink=dir
+read symlink=dir
+scan symlink=dir
+write symlink=dir

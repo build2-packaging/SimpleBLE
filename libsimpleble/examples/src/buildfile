@@ -2,6 +2,7 @@ import intf_libs = libsimpleble%lib{simpleble}
 
 example_dirs = \
     connect \
+    connect_safe \
     list_adapters \
     notify \
     notify_multi \
@@ -9,9 +10,12 @@ example_dirs = \
     scan \
     write
 
+lib{common}: {cxx hxx}{common/*}
+lib{common}: $intf_libs
+
 for example: $example_dirs
 {
-    exe{$(example)_example}: {hxx cxx}{$example/* common/*}
-    exe{$(example)_example}: $intf_libs
+    exe{$(example)_example}: cxx{$example/*}
+    exe{$(example)_example}: $intf_libs lib{common}
     ./: exe{$(example)_example}
 }

@@ -1,6 +1,5 @@
-project = libsimpleble-examples
+project = # Unnamed examples subproject.
 
-using version
 using config
 using test
 using install
