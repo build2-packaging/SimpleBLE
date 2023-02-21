@@ -1,7 +1,8 @@
+ble_nus_example
 connect_example
 list_adapters_example
+list_paired_example
 notify_example
-notify_multi_example
+pair_example
 read_example
 scan_example
-write_example
