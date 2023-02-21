@@ -1,0 +1,10 @@
+import intf_libs = libsimpledbus%lib{simpledbus}
+
+example_dirs = notification
+
+for example: $example_dirs
+{
+    exe{$(example)_example}: cxx{$example/*}
+    exe{$(example)_example}: $intf_libs
+    ./: exe{$(example)_example}
+}
