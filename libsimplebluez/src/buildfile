@@ -18,21 +18,21 @@ src_pfx_inc = [dir_path] $src_root/include/
 out_pfx_src = [dir_path] $out_root/src/
 src_pfx_src = [dir_path] $src_root/src/
 
-src_inc_dirs = {**/}
-for d: $src_inc_dirs
+# use all subdirectories for private include path
+src_dirs = {**/}
+for d: $src_dirs
 {
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
-platform_poptions = "-DSIMPLEBLUEZ_LOG_LEVEL=$config.libsimplebluez.log_level"
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-                $platform_poptions
+                "-DSIMPLEBLUEZ_LOG_LEVEL=$config.libsimplebluez.log_level"
 
 # Export options.
 lib{simplebluez}:
 {
-  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc" $platform_poptions
+  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc"
   cxx.export.libs = $intf_libs
 }
 

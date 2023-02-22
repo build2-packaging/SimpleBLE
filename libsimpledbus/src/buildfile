@@ -17,25 +17,30 @@ src_pfx_inc = [dir_path] $src_root/include/
 out_pfx_src = [dir_path] $out_root/src/
 src_pfx_src = [dir_path] $src_root/src/
 
+# use all subdirectories for private include path
 src_dirs = {**/}
 for d: $src_dirs
 {
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
-platform_poptions = "-I/usr/include/dbus-1.0" "-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include" "-DSIMPLEDBUS_LOG_LEVEL=$config.libsimpledbus.log_level"
-platform_libs = -pthread -ldbus-1
+intf_poptions = "-I/usr/include/dbus-1.0" \
+                "-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include"
+intf_libs = -pthread -ldbus-1
 
+# this package is only valid for linux
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
+                $intf_poptions \
+                "-DSIMPLEDBUS_LOG_LEVEL=$config.libsimpledbus.log_level" \
                 $platform_poptions
-cxx.libs += $platform_libs
+cxx.libs += $intf_libs
 
 # Export options.
 lib{simpledbus}:
 {
-  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc" $platform_poptions
-  cxx.export.libs = $platform_libs
+  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc" $intf_poptions
+  cxx.export.libs = $intf_libs
 }
 
 # For pre-releases use the complete version to make sure they cannot be used
