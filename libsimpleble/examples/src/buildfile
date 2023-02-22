@@ -10,12 +10,9 @@ example_dirs = \
     scan \
     write
 
-lib{common}: {cxx hxx}{common/*}
-lib{common}: $intf_libs
-
 for example: $example_dirs
 {
-    exe{$(example)_example}: cxx{$example/*}
-    exe{$(example)_example}: $intf_libs lib{common}
+    exe{$(example)_example}: cxx{$example/*} {cxx hxx}{common/*}
+    exe{$(example)_example}: $intf_libs
     ./: exe{$(example)_example}
 }
