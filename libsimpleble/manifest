@@ -15,5 +15,5 @@ builds: &( +linux +macos +windows )
 
 depends: * build2 >= 0.16.0-
 depends: * bpkg >= 0.16.0-
-depends: fmt ^9.1.0
+depends: fmt >= 8.0.0
 depends: libsimplebluez == $
