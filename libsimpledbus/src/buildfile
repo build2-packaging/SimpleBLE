@@ -25,7 +25,7 @@ for d: $src_dirs
 }
 
 intf_poptions = "-I/usr/include/dbus-1.0" \
-                "-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include"
+                "-I/usr/lib/$(cxx.target.cpu)-linux-gnu/dbus-1.0/include"
 intf_libs = -pthread -ldbus-1
 
 # this package is only valid for linux
