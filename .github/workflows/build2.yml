@@ -89,8 +89,9 @@ jobs:
     - uses: actions/checkout@v3
       with:
         submodules: true
-    - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.11
-    - uses: microsoft/setup-msbuild@v1.1
+    - name: Find WinRT
+      shell: powershell
+      run: Get-ChildItem -Recurse -Path "C:\Program Files (x86)\" WinRTBase.h
     - uses: build2/setup-build2-github-action@v2
       with:
         build2-version: staged
@@ -99,5 +100,4 @@ jobs:
       shell: cmd
       run: bdep init -C @cc cc config.config.load=build-config/${{matrix.config.config_file}}
     - name: Build
-      shell: cmd
       run: b -V
