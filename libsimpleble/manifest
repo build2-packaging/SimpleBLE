@@ -11,7 +11,7 @@ src-url: https://github.com/OpenBluetoothToolbox/SimpleBLE
 doc-url: https://simpleble.com/
 package-url: https://github.com/build2-packaging/SimpleBLE
 package-email: packaging@build2.org ; Mailing list.
-builds: &( +linux +macos +windows )
+builds: sys
 
 depends: * build2 >= 0.16.0-
 depends: * bpkg >= 0.16.0-
