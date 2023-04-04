@@ -11,8 +11,19 @@ src-url: https://github.com/OpenBluetoothToolbox/SimpleBLE
 doc-url: https://simpleble.com/
 package-url: https://github.com/build2-packaging/SimpleBLE
 package-email: packaging@build2.org ; Mailing list.
-builds: sys
 
 depends: * build2 >= 0.16.0-
 depends: * bpkg >= 0.16.0-
 depends: fmt >= 8.0.0
+
+# This library dependens on platform-specific implementation libraries that
+# are (currently) not packaged and need to come from the system package
+# manager.
+#
+builds: none
+
+debian-builds: sys
+debian-build-include: linux_debian*-**
+debian-build-include: linux_ubuntu*-**
+debian-build-exclude: **
+debian-build-config: sys:libdbus-1
