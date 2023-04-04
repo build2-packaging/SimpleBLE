@@ -16,7 +16,7 @@ is_linux = ($cxx.target.class == 'linux')
 lib{simpleble}: $pub/{$pub_hdrs}
 lib{simpleble}: {hxx cxx}{*}
 lib{simpleble}: builders/{hxx cxx}{*}
-lib{simpleble}: external/{hxx cxx}{*}
+lib{simpleble}: external/hxx{*.hpp}
 lib{simpleble}: $impl_libs $intf_libs
 
 lib{simpleble}: linux/{hxx cxx}{*}: include = $is_linux
