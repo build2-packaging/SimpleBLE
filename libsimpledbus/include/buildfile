@@ -1,4 +1,4 @@
-pub_hdrs = hxx{**} external/hxx{*.hpp}
+pub_hdrs = hxx{** **.hpp}
 
 ./: $pub_hdrs
 
