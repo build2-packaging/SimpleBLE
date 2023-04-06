@@ -27,3 +27,8 @@ debian-build-include: linux_debian*-**
 debian-build-include: linux_ubuntu*-**
 debian-build-exclude: **
 debian-build-config: sys:libdbus-1
+
+fedora-builds: sys
+fedora-build-include: linux_fedora*-**
+fedora-build-exclude: **
+fedora-build-config: sys:libdbus
