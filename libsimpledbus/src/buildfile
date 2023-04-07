@@ -1,3 +1,11 @@
+# We used to link dbus as -ldbus-1 but on Fedora some of its headers are
+# installed into /usr/lib*/ and to get the necessary -I options we have to go
+# through its pkg-config file. So we import it.
+#
+# Note also that on some distributions (such as Fedora), there is no static
+# variant, so we always link shared.
+#
+import intf_libs = libdbus%libs{dbus-1}
 import impl_libs = fmt%lib{fmt}
 
 # Public headers.
@@ -9,7 +17,7 @@ pub_hdrs = $($pub/ pub_hdrs)
 
 lib{simpledbus}: $pub/{$pub_hdrs}
 lib{simpledbus}: {hxx cxx}{**}
-lib{simpledbus}: $impl_libs
+lib{simpledbus}: $impl_libs $intf_libs
 
 # Build options.
 out_pfx_inc = [dir_path] $out_root/include/
@@ -26,7 +34,7 @@ for d: $src_dirs
 
 intf_poptions = "-I/usr/include/dbus-1.0" \
                 "-I/usr/lib/$(cxx.target.cpu)-linux-gnu/dbus-1.0/include"
-intf_libs = -pthread -ldbus-1
+intf_sys_libs = -pthread
 
 # this package is only valid for linux
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
@@ -34,13 +42,13 @@ cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 $intf_poptions \
                 "-DSIMPLEDBUS_LOG_LEVEL=$config.libsimpledbus.log_level" \
                 $platform_poptions
-cxx.libs += $intf_libs
+cxx.libs += $intf_sys_libs
 
 # Export options.
 lib{simpledbus}:
 {
   cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc" $intf_poptions
-  cxx.export.libs = $intf_libs
+  cxx.export.libs = $intf_libs $intf_sys_libs
 }
 
 # For pre-releases use the complete version to make sure they cannot be used
