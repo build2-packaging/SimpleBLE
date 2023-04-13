@@ -32,14 +32,11 @@ for d: $src_dirs
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
-intf_poptions = "-I/usr/include/dbus-1.0" \
-                "-I/usr/lib/$(cxx.target.cpu)-linux-gnu/dbus-1.0/include"
 intf_sys_libs = -pthread
 
 # this package is only valid for linux
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-                $intf_poptions \
                 "-DSIMPLEDBUS_LOG_LEVEL=$config.libsimpledbus.log_level" \
                 $platform_poptions
 cxx.libs += $intf_sys_libs
@@ -47,7 +44,7 @@ cxx.libs += $intf_sys_libs
 # Export options.
 lib{simpledbus}:
 {
-  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc" $intf_poptions
+  cxx.export.poptions = "-I$out_pfx_inc" "-I$src_pfx_inc"
   cxx.export.libs = $intf_libs $intf_sys_libs
 }
 
