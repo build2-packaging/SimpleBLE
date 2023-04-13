@@ -26,18 +26,12 @@ lib{simpleble}: windows/{hxx cxx}{*}: include = $is_windows
 
 lib{simpleble}: macos/{hxx cxx mm}{*}: include = $is_macos
 
-platform_libs = # Platform specific libraries.
-platform_poptions = # Platform specific poptions.
 src_inc_dirs = builders/ external/
 switch $cxx.target.class
 {
     case 'windows'
     {
         src_inc_dirs += windows/
-        if ($cxx.target.system != 'mingw32')
-        {
-            platform_poptions += -D_WIN32_WINNT=0x0A00 -D_USE_MATH_DEFINES
-        }
     }
     case 'linux'
     {
@@ -47,11 +41,11 @@ switch $cxx.target.class
     case 'macos'
     {
         src_inc_dirs += macos/
-        platform_libs += -framework Foundation -framework CoreBluetooth
+        cxx.libs += -framework Foundation -framework CoreBluetooth
     }
     default
     {
-        fail "Unsupported platform '$cxx.target.class"
+        fail "Unsupported platform '$cxx.target.class'"
     }
 }
 
@@ -61,6 +55,7 @@ src_pfx_inc = [dir_path] $src_root/include/
 out_pfx_src = [dir_path] $out_root/src/
 src_pfx_src = [dir_path] $src_root/src/
 
+# add all private include dirs
 for d: $src_inc_dirs
 {
     cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
@@ -68,9 +63,7 @@ for d: $src_inc_dirs
 
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-                "-DSIMPLEBLE_EXPORTS" \
-                $platform_poptions
-cxx.libs += $platform_libs
+                "-DSIMPLEBLE_EXPORTS"
 
 {hbmia obja}{*}: cxx.poptions += -DSIMPLEBLE_STATIC
 

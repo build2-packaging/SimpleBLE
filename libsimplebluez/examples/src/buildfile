@@ -1,4 +1,4 @@
-import intf_libs = libsimplebluez%lib{simplebluez}
+import libs = libsimplebluez%lib{simplebluez}
 
 example_dirs = \
     ble_nus \
@@ -13,6 +13,6 @@ example_dirs = \
 for example: $example_dirs
 {
     exe{$(example)_example}: cxx{$example/*}
-    exe{$(example)_example}: $intf_libs
+    exe{$(example)_example}: $libs
     ./: exe{$(example)_example}
 }

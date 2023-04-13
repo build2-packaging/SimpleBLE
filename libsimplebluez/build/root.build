@@ -12,3 +12,19 @@ hxx{*}: cxx.importable = true
 test.target = $cxx.target
 
 config [string] config.libsimplebluez.log_level ?= FATAL
+
+switch $config.libsimplebluez.log_level
+{
+    case 'NONE'
+    case 'FATAL'
+    case 'ERROR'
+    case 'WARN'
+    case 'INFO'
+    {
+        # do nothing, values are ok
+    }
+    default
+    {
+        fail "Unsupported log_level '$config.libsimplebluez.log_level'"
+    }
+}

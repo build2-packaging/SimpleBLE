@@ -1,0 +1,5 @@
+# Development Notes
+
+The header file `simpleble/export.h` in the `libsimpleble` package is actually not symlinked but was manually created. In the upstream project this file is created in a platform-dependent way by the build system.
+
+If the upstream version is updated, this file has to be revised and adjusted, if needed by the new version.
