@@ -1,1 +1,1 @@
-../upstream/README.rst
+../README.md
