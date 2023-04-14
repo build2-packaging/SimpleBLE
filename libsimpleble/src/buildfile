@@ -1,5 +1,4 @@
 import impl_libs = fmt%lib{fmt}
-import linux_intf_libs = libsimplebluez%lib{simplebluez}
 intf_libs =
 
 # Public headers.
@@ -13,6 +12,11 @@ is_windows = ($cxx.target.class == 'windows')
 is_macos = ($cxx.target.class == 'macos')
 is_linux = ($cxx.target.class == 'linux')
 
+if $is_linux
+{
+    import intf_libs += libsimplebluez%lib{simplebluez}
+}
+
 lib{simpleble}: $pub/{$pub_hdrs}
 lib{simpleble}: {hxx cxx}{*}
 lib{simpleble}: builders/{hxx cxx}{*}
@@ -20,10 +24,7 @@ lib{simpleble}: external/hxx{*.hpp}
 lib{simpleble}: $impl_libs $intf_libs
 
 lib{simpleble}: linux/{hxx cxx}{*}: include = $is_linux
-lib{simpleble}: $linux_intf_libs: include = $is_linux
-
 lib{simpleble}: windows/{hxx cxx}{*}: include = $is_windows
-
 lib{simpleble}: macos/{hxx cxx mm}{*}: include = $is_macos
 
 src_inc_dirs = builders/ external/
@@ -36,7 +37,6 @@ switch $cxx.target.class
     case 'linux'
     {
         src_inc_dirs += linux/
-        intf_libs += $linux_intf_libs
     }
     case 'macos'
     {

@@ -15,7 +15,7 @@ package-email: packaging@build2.org ; Mailing list.
 depends: * build2 >= 0.16.0-
 depends: * bpkg >= 0.16.0-
 depends: fmt >= 8.0.0
-depends: libsimplebluez == $
+depends: libsimplebluez == $ ? ($cxx.target.class == 'linux')
 
 # This library dependens on platform-specific implementation libraries that
 # are (currently) not packaged and need to come from the system package
