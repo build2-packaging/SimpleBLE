@@ -29,16 +29,14 @@ src_pfx_src = [dir_path] $src_root/src/
 src_dirs = {**/}
 for d: $src_dirs
 {
-    cxx.poptions +=  "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
+    cxx.poptions += "-I$out_pfx_src/$d" "-I$src_pfx_src/$d"
 }
 
 intf_sys_libs = -pthread
 
-# this package is only valid for linux
 cxx.poptions += "-I$out_pfx_src" "-I$src_pfx_src" \
                 "-I$out_pfx_inc" "-I$src_pfx_inc" \
-                "-DSIMPLEDBUS_LOG_LEVEL=$config.libsimpledbus.log_level" \
-                $platform_poptions
+                "-DSIMPLEDBUS_LOG_LEVEL=$config.libsimpledbus.log_level"
 cxx.libs += $intf_sys_libs
 
 # Export options.
