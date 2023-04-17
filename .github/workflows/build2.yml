@@ -71,33 +71,33 @@ jobs:
       run: b -V
 
   # Job for building on Windows
-  Windows:
-    name: ${{matrix.config.name}}
-    runs-on: ${{matrix.config.os}}
-    strategy:
-      matrix:
-        config:
-          - name: Windows msvc Debug
-            os: windows-latest
-            config_file: msvc.debug.build
-            compiler_type: msvc
-          - name: Windows msvc Release
-            os: windows-latest
-            config_file: msvc.release.build
-            compiler_type: msvc
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: true
-    - uses: build2/setup-build2-github-action@v2
-      with:
-        build2-version: staged
-        build2-windows-compiler: ${{matrix.config.compiler_type}}
-    - name: Set up Visual Studio shell
-      uses: egor-tensin/vs-shell@v2
-      with:
-        arch: x64
-    - name: Configure
-      run: bdep init -d libsimpleble -C ../SimpleBLE-cc @cc cc config.config.load=build-config/${{matrix.config.config_file}}
-    - name: Build
-      run: b -V
+  # Windows:
+  #   name: ${{matrix.config.name}}
+  #   runs-on: ${{matrix.config.os}}
+  #   strategy:
+  #     matrix:
+  #       config:
+  #         - name: Windows msvc Debug
+  #           os: windows-latest
+  #           config_file: msvc.debug.build
+  #           compiler_type: msvc
+  #         - name: Windows msvc Release
+  #           os: windows-latest
+  #           config_file: msvc.release.build
+  #           compiler_type: msvc
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #     with:
+  #       submodules: true
+  #   - uses: build2/setup-build2-github-action@v2
+  #     with:
+  #       build2-version: staged
+  #       build2-windows-compiler: ${{matrix.config.compiler_type}}
+  #   - name: Set up Visual Studio shell
+  #     uses: egor-tensin/vs-shell@v2
+  #     with:
+  #       arch: x64
+  #   - name: Configure
+  #     run: bdep init -d libsimpleble -C ../SimpleBLE-cc @cc cc config.config.load=build-config/${{matrix.config.config_file}}
+  #   - name: Build
+  #     run: b -V

@@ -2,4 +2,3 @@ config.version = 1
 config.cxx = cl /MD
 config.cxx.std = 17
 config.cc.coptions = /O2 /DNDEBUG
-config.cc.poptions = /I 'C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\'
