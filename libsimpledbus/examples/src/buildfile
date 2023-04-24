@@ -8,3 +8,7 @@ for example: $example_dirs
     exe{$(example)_example}: $intf_libs
     ./: exe{$(example)_example}
 }
+
+# select some specific examples as test which do not require
+# user-interaction
+exe{notification_example}: test = true
