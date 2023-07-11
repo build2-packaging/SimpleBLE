@@ -1,0 +1,7 @@
+: 1
+name: libsimpleble
+version: 0.5.0+1
+project: SimpleBLE
+summary: The ultimate fully-fledged cross-platform library for Bluetooth Low\
+ Energy (BLE).
+license: MIT

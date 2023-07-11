@@ -1,0 +1,7 @@
+: 1
+name: libsimplebluez
+version: 0.5.0+1
+project: SimpleBLE
+summary: A simple C++ wrapper around Bluez with a commercially-friendly\
+ licence.
+license: MIT
