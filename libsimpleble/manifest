@@ -1,6 +1,6 @@
 : 1
 name: libsimpleble
-version: 0.5.0
+version: 0.5.0+1
 project: SimpleBLE
 summary: The ultimate fully-fledged cross-platform library for Bluetooth Low Energy (BLE).
 license: MIT
@@ -12,8 +12,8 @@ doc-url: https://simpleble.com/
 package-url: https://github.com/build2-packaging/SimpleBLE
 package-email: packaging@build2.org ; Mailing list.
 
-depends: * build2 >= 0.16.0-
-depends: * bpkg >= 0.16.0-
+depends: * build2 >= 0.16.0
+depends: * bpkg >= 0.16.0
 depends: fmt >= 8.0.0
 depends: libsimplebluez == $ ? ($cxx.target.class == 'linux')
 

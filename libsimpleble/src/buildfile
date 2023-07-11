@@ -21,11 +21,12 @@ lib{simpleble}: $pub/{$pub_hdrs}
 lib{simpleble}: {hxx cxx}{*}
 lib{simpleble}: builders/{hxx cxx}{*}
 lib{simpleble}: external/hxx{*.hpp}
-lib{simpleble}: $impl_libs $intf_libs
 
 lib{simpleble}: linux/{hxx cxx}{*}: include = $is_linux
 lib{simpleble}: windows/{hxx cxx}{*}: include = $is_windows
 lib{simpleble}: macos/{hxx cxx mm}{*}: include = $is_macos
+
+lib{simpleble}: $impl_libs $intf_libs
 
 src_inc_dirs = builders/ external/
 switch $cxx.target.class
